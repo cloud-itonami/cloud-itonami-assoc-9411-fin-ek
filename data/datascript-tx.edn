@@ -1,0 +1,25 @@
+;; data/datascript-tx.edn — DataScript tx-data derived from src/association/facts.cljc
+;; `association.facts/catalog` (ADR-2607141700 Wave 0). Same shape as sibling files.
+
+[#:association-rule{:id "ek.predecessor-1907-general-employers-confederation"
+                     :title "The General Employers' Confederation of Finland, EK's earliest predecessor, established 1907 (en.wikipedia.org)"
+                     :association "ek"
+                     :isic "9411"
+                     :country "FIN"
+                     :kind :governance-program
+                     :url "https://en.wikipedia.org/wiki/Confederation_of_Finnish_Industries"
+                     :url-provenance :wikipedia-corroborated
+                     :established-date "1907"
+                     :retrieved-at "2026-07-17"
+                     :topic [:governance]}
+ #:association-rule{:id "ek.founding-2005-pt-tt-merger"
+                     :title "EK began operations at the start of 2005, formed via merger of Palvelutyönantajat (PT) and Teollisuuden ja Työnantajain Keskusliitto (TT) (fi.wikipedia.org, corroborated by Wikidata Q5159811 inception statement)"
+                     :association "ek"
+                     :isic "9411"
+                     :country "FIN"
+                     :kind :governance-program
+                     :url "https://fi.wikipedia.org/wiki/Elinkeinoel%C3%A4m%C3%A4n_keskusliitto"
+                     :url-provenance :wikipedia-corroborated
+                     :established-date "2005"
+                     :retrieved-at "2026-07-17"
+                     :topic [:governance]}]
