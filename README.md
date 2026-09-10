@@ -1,7 +1,7 @@
 # cloud-itonami-assoc-9411-fin-ek
 
 Industry rule/history catalog for **EK** (Elinkeinoelämän
-keskusliitto, Confederation of Finnish Industries) — the NINETEENTH
+keskusliitto, Confederation of Finnish Industries) — an
 entry aligned to **ISIC 9411** (activities of business, employers, and
 professional membership organizations), alongside
 [`-9411-sau-fsc`](https://github.com/cloud-itonami/cloud-itonami-assoc-9411-sau-fsc)
@@ -54,14 +54,32 @@ municipality
 ([`cloud-itonami-municipality-fin-helsinki`](https://github.com/cloud-itonami/cloud-itonami-municipality-fin-helsinki)),
 and association (this repo).
 
-`ek.fi`'s own domain did not surface a navigable founding-history
-page this tick. Both entries here were instead directly
-WebFetch-verified against `en.wikipedia.org`'s and
-`fi.wikipedia.org`'s own articles — the Finnish-language article
-gives the more complete account, since the English article's body
-text stops short of explaining its own "Organizations established in
-2005" category. The 2005 date is independently corroborated by
-Wikidata (Q5159811)'s own "inception" statement.
+Ten entries, each carrying the page it came from
+(`:source-article`) and the verbatim span the claim rests on
+(`:source-quote`). Eight are first-party `ek.fi` pages; one is
+BusinessEurope's own member page; two rest on Wikipedia for a
+founding date `ek.fi` does not state.
+
+**The July note that `ek.fi` "did not surface a navigable
+founding-history page" is no longer true and has been removed.**
+Measured 2026-09-11: `ek.fi` serves its own structure, membership,
+strategy and Brussels pages, and eight of them are cited here
+directly. What `ek.fi` still does not state is a founding date —
+so the 1907 predecessor and the 2005 PT/TT merger remain the two
+Wikipedia-sourced entries, marked `:wikipedia-corroborated` rather
+than first-party.
+
+### Reachability is not support
+
+A URL that returns HTTP 200 without the claim reads exactly like one
+that carries it, so every entry pins a verbatim span and
+`--live` requires that span to still be in the fetched page.
+
+This is not hypothetical. While this catalog was extended, a search
+result offered a `finlex.fi` PDF as the official English translation
+of the Associations Act (503/1989). It returned 200, from the right
+first-party host — and it is the **Act on the Finnish Red Cross
+(238/2000)**. It is not in this catalog because the text was read.
 
 ## Scope
 
@@ -74,17 +92,50 @@ fabricate one.
 
 ## Data
 
-- `src/association/facts.cljc` — the catalog, source of truth.
-- `schema/association-rule.edn` — DataScript schema.
-- `data/datascript-tx.edn` — derived DataScript tx-data (query this
-  alongside other `cloud-itonami`/`etzhayyim` compliance-fact sources via
-  `com-junkawasaki/root`'s `scripts/compliance-fact-query.cljs`).
+`data/datascript-tx.edn` is **the only place the facts are
+authored**. Both readings are generated from it:
 
-Both entries directly WebFetch-verified: the 1907 establishment of
-the General Employers' Confederation of Finland (EK's earliest
-predecessor, per en.wikipedia.org), and EK's own formation at the
-start of 2005 via merger of Palvelutyönantajat (PT) and Teollisuuden
-ja Työnantajain Keskusliitto (TT) (per fi.wikipedia.org).
+- `data/datascript-tx.edn` — the catalog, source of truth.
+- `src/association/facts.kotoba` — the Clojure reading
+  (`association.facts`). Generated.
+- `src/association_facts.kotoba` — the Kotoba port, which reaches
+  the Kotoba oracle, wasm and both native ISAs. Generated.
+- `schema/association-rule.edn` — DataScript schema.
+
+Query it alongside other `cloud-itonami`/`etzhayyim` compliance-fact
+sources via `com-junkawasaki/root`'s
+`scripts/compliance-fact-query.cljs`.
+
+## Checking it
+
+```
+nbb scripts/verify-catalog.cljs          # structural, offline
+nbb scripts/verify-catalog.cljs --live   # fetch every :url, require every
+                                         # :source-quote to still be in it
+nbb scripts/gen-kotoba-port.cljs         # rewrite both readings
+nbb scripts/gen-kotoba-port.cljs --check # exit 1 if either has drifted
+```
+
+`verify-catalog.cljs` is three-valued on purpose: `0` checked and
+clean, `1` checked with findings, `2` REFUSED — it could not check.
+"I could not read the catalog" and "I read it and it was fine" must
+not leave the same trace.
+
+### The JVM suite does not run here
+
+The owner's 2026-09-10 instruction renamed `.clj`/`.cljc` to
+`.kotoba` across the workspace, deliberately, so that the compiler's
+refusals would produce the work list. In this repo that means
+`clojure -M:test` now collects nothing: measured 2026-09-11, **"Ran 0
+tests containing 0 assertions. 0 failures, 0 errors."**, exit 0 — a
+suite reporting success for running nothing — and
+`association.facts` can no longer be required at all.
+
+That state is deliberate and is **not** reverted here. It is why
+both readings are generated rather than hand-maintained: the parity
+suite was the only thing standing between two hand-typed copies, and
+with it dormant a second copy would have nothing checking it. The
+`nbb` scripts above need no JVM and do run.
 
 ## License
 
