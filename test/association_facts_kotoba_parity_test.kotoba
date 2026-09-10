@@ -11,8 +11,20 @@
   `:association-rule/topic` is a SET. A set has no order and `topic` is indexed
   by position, so the port chose the order the data file writes; the assertion
   below compares against that written order rather than against `seq` on a set,
-  which is not stable to rely on."
+  which is not stable to rely on. That order is READ FROM the data file rather
+  than restated here: it used to be a literal, and a literal of length two is
+  what a two-entry catalog leaves behind when the catalog grows to ten.
+
+  NOTE (2026-09-11): this suite does not run. The owner's 2026-09-10 rename of
+  .clj/.cljc to .kotoba means `clojure -M:test` collects nothing and exits 0,
+  and `association.facts` cannot be required. That state is deliberate and is
+  not reverted here. The assertions below were executed against this catalog by
+  other means while it was extended -- `nbb scripts/verify-catalog.cljs --live`
+  for the sources, `nbb scripts/gen-kotoba-port.cljs --check` for the two
+  readings, and a standalone amu run comparing all fifteen fields of all ten
+  entries -- so what is written here is checked, but not by this file."
   (:require [clojure.test :refer [deftest is testing]]
+            [clojure.edn :as edn]
             [association.facts :as facts]
             [kotoba.compiler.core :as compiler]
             [kotoba.kir :as ir]))
@@ -25,16 +37,29 @@
 (def ^:private slug "ek")
 (def ^:private fields
   ["id" "title" "association" "isic" "country" "kind" "url" "url-provenance"
-   "established-date" "retrieved-at"])
+   "source-article" "source-quote" "established-date" "last-revised-date"
+   "date-unknown-because" "date-precision" "retrieved-at"])
 (def ^:private kw->field
   {"id" :association-rule/id "title" :association-rule/title
    "association" :association-rule/association "isic" :association-rule/isic
    "country" :association-rule/country "kind" :association-rule/kind
    "url" :association-rule/url "url-provenance" :association-rule/url-provenance
+   "source-article" :association-rule/source-article
+   "source-quote" :association-rule/source-quote
    "established-date" :association-rule/established-date
+   "last-revised-date" :association-rule/last-revised-date
+   "date-unknown-because" :association-rule/date-unknown-because
+   "date-precision" :association-rule/date-precision
    "retrieved-at" :association-rule/retrieved-at})
 (def ^:private entries (vec (facts/spec-basis slug)))
-(def ^:private topic-order [["governance"] ["governance"]])
+
+;; The order the data file writes, read from the data file. `topic` is indexed
+;; by position and a set has no order, so something has to fix one; the
+;; generator uses the data file's vector, so that is what this compares
+;; against. Reading it here means this constant cannot fall behind the catalog.
+(def ^:private topic-order
+  (mapv #(mapv name (:association-rule/topic %))
+        (edn/read-string (slurp "data/datascript-tx.edn"))))
 
 (deftest the-fixture-reads-a-real-catalog
   ;; An empty catalog compares equal to an empty port.
