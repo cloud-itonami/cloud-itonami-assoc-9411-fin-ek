@@ -1,8 +1,8 @@
 #!/usr/bin/env nbb
-;; scripts/verify-catalog.cljs — check the EK catalog against its own sources.
+;; scripts/verify-catalog.cljk — check the EK catalog against its own sources.
 ;;
-;;   nbb scripts/verify-catalog.cljs            structural only (offline)
-;;   nbb scripts/verify-catalog.cljs --live     also fetch every :url and require
+;;   nbb scripts/verify-catalog.cljk            structural only (offline)
+;;   nbb scripts/verify-catalog.cljk --live     also fetch every :url and require
 ;;                                              every :source-quote to be in it
 ;;
 ;; Ported from cloud-itonami-assoc-9411-sau-fsc (which took it from -gbr-cbi).

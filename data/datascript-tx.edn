@@ -4,10 +4,10 @@
 ;;   src/association/facts.kotoba   the Clojure reading (`association.facts`)
 ;;   src/association_facts.kotoba   the Kotoba port
 ;;
-;;   nbb scripts/gen-kotoba-port.cljs           rewrite both
-;;   nbb scripts/gen-kotoba-port.cljs --check   exit 1 if either has drifted
-;;   nbb scripts/verify-catalog.cljs            structural checks, offline
-;;   nbb scripts/verify-catalog.cljs --live     fetch every :url and require
+;;   nbb scripts/gen-kotoba-port.cljk           rewrite both
+;;   nbb scripts/gen-kotoba-port.cljk --check   exit 1 if either has drifted
+;;   nbb scripts/verify-catalog.cljk            structural checks, offline
+;;   nbb scripts/verify-catalog.cljk --live     fetch every :url and require
 ;;                                              every :source-quote to be in it
 ;;
 ;; Each entry names the page it came from (:source-article) and the verbatim
