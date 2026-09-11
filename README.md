@@ -109,11 +109,11 @@ sources via `com-junkawasaki/root`'s
 ## Checking it
 
 ```
-nbb scripts/verify-catalog.cljs          # structural, offline
-nbb scripts/verify-catalog.cljs --live   # fetch every :url, require every
+nbb scripts/verify-catalog.cljk          # structural, offline
+nbb scripts/verify-catalog.cljk --live   # fetch every :url, require every
                                          # :source-quote to still be in it
-nbb scripts/gen-kotoba-port.cljs         # rewrite both readings
-nbb scripts/gen-kotoba-port.cljs --check # exit 1 if either has drifted
+nbb scripts/gen-kotoba-port.cljk         # rewrite both readings
+nbb scripts/gen-kotoba-port.cljk --check # exit 1 if either has drifted
 ```
 
 `verify-catalog.cljs` is three-valued on purpose: `0` checked and

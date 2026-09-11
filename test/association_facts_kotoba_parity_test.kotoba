@@ -19,8 +19,8 @@
   .clj/.cljc to .kotoba means `clojure -M:test` collects nothing and exits 0,
   and `association.facts` cannot be required. That state is deliberate and is
   not reverted here. The assertions below were executed against this catalog by
-  other means while it was extended -- `nbb scripts/verify-catalog.cljs --live`
-  for the sources, `nbb scripts/gen-kotoba-port.cljs --check` for the two
+  other means while it was extended -- `nbb scripts/verify-catalog.cljk --live`
+  for the sources, `nbb scripts/gen-kotoba-port.cljk --check` for the two
   readings, and a standalone amu run comparing all fifteen fields of all ten
   entries -- so what is written here is checked, but not by this file."
   (:require [clojure.test :refer [deftest is testing]]
