@@ -14,7 +14,7 @@
 
   Every entry carries the page it came from (:source-article) and the
   verbatim span the claim rests on (:source-quote), and
-  `nbb scripts/verify-catalog.cljk --live` fetches each :url and requires
+  `kbb --backend sci scripts/verify-catalog.cljk --live` fetches each :url and requires
   that span to still be in it. Reachability is not support: a URL that
   returns 200 without the claim reads exactly like one that carries it.
   While this catalog was built, a finlex.fi PDF offered as the English

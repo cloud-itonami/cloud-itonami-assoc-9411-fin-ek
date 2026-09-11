@@ -1,9 +1,9 @@
-#!/usr/bin/env nbb
+#!/usr/bin/env kbb
 ;; scripts/gen-kotoba-port.cljk — write the two derived readings of the EK
 ;; catalog from data/datascript-tx.edn.
 ;;
-;;   nbb scripts/gen-kotoba-port.cljk           rewrite both
-;;   nbb scripts/gen-kotoba-port.cljk --check   exit 1 if either file on disk
+;;   kbb --backend sci scripts/gen-kotoba-port.cljk           rewrite both
+;;   kbb --backend sci scripts/gen-kotoba-port.cljk --check   exit 1 if either file on disk
 ;;                                              is not what this would write
 ;;
 ;; Ported from cloud-itonami-assoc-9411-sau-fsc, which wrote it because the
@@ -18,7 +18,7 @@
 ;; Clojure reading hand-maintained, relying on the parity suite to compare the
 ;; two. That suite does not run in this repository: the owner's 2026-09-10
 ;; instruction renamed .clj/.cljc to .kotoba across the workspace, so
-;; `clojure -M:test` now collects nothing and exits 0, and `association.facts`
+;; `kbb -M:test` now collects nothing and exits 0, and `association.facts`
 ;; can no longer be required at all. Measured 2026-09-11: "Ran 0 tests
 ;; containing 0 assertions. 0 failures, 0 errors." -- a suite that reports
 ;; success for running nothing.
@@ -236,7 +236,7 @@
    "\n"
    "  Every entry carries the page it came from (:source-article) and the\n"
    "  verbatim span the claim rests on (:source-quote), and\n"
-   "  `nbb scripts/verify-catalog.cljk --live` fetches each :url and requires\n"
+   "  `kbb --backend sci scripts/verify-catalog.cljk --live` fetches each :url and requires\n"
    "  that span to still be in it. Reachability is not support: a URL that\n"
    "  returns 200 without the claim reads exactly like one that carries it.\n"
    "  While this catalog was built, a finlex.fi PDF offered as the English\n"
@@ -295,7 +295,7 @@
                           (count entries) " entries)")) (.exit js/process 0))
         (do (println (str "STALE: " (str/join ", " stale)
                           " is not what the generator writes."))
-            (println "  run: nbb scripts/gen-kotoba-port.cljk")
+            (println "  run: kbb --backend sci scripts/gen-kotoba-port.cljk")
             (.exit js/process 1))))
     (do (fs/writeFileSync out-path text)
         (fs/writeFileSync cljc-path clj)
