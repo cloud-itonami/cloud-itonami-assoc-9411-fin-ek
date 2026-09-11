@@ -109,11 +109,11 @@ sources via `com-junkawasaki/root`'s
 ## Checking it
 
 ```
-nbb scripts/verify-catalog.cljk          # structural, offline
-nbb scripts/verify-catalog.cljk --live   # fetch every :url, require every
+kbb --backend sci scripts/verify-catalog.cljk          # structural, offline
+kbb --backend sci scripts/verify-catalog.cljk --live   # fetch every :url, require every
                                          # :source-quote to still be in it
-nbb scripts/gen-kotoba-port.cljk         # rewrite both readings
-nbb scripts/gen-kotoba-port.cljk --check # exit 1 if either has drifted
+kbb --backend sci scripts/gen-kotoba-port.cljk         # rewrite both readings
+kbb --backend sci scripts/gen-kotoba-port.cljk --check # exit 1 if either has drifted
 ```
 
 `verify-catalog.cljs` is three-valued on purpose: `0` checked and
@@ -126,7 +126,7 @@ not leave the same trace.
 The owner's 2026-09-10 instruction renamed `.clj`/`.cljc` to
 `.kotoba` across the workspace, deliberately, so that the compiler's
 refusals would produce the work list. In this repo that means
-`clojure -M:test` now collects nothing: measured 2026-09-11, **"Ran 0
+`kbb -M:test` now collects nothing: measured 2026-09-11, **"Ran 0
 tests containing 0 assertions. 0 failures, 0 errors."**, exit 0 — a
 suite reporting success for running nothing — and
 `association.facts` can no longer be required at all.

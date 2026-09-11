@@ -16,11 +16,11 @@
   what a two-entry catalog leaves behind when the catalog grows to ten.
 
   NOTE (2026-09-11): this suite does not run. The owner's 2026-09-10 rename of
-  .clj/.cljc to .kotoba means `clojure -M:test` collects nothing and exits 0,
+  .clj/.cljc to .kotoba means `kbb -M:test` collects nothing and exits 0,
   and `association.facts` cannot be required. That state is deliberate and is
   not reverted here. The assertions below were executed against this catalog by
-  other means while it was extended -- `nbb scripts/verify-catalog.cljk --live`
-  for the sources, `nbb scripts/gen-kotoba-port.cljk --check` for the two
+  other means while it was extended -- `kbb --backend sci scripts/verify-catalog.cljk --live`
+  for the sources, `kbb --backend sci scripts/gen-kotoba-port.cljk --check` for the two
   readings, and a standalone amu run comparing all fifteen fields of all ten
   entries -- so what is written here is checked, but not by this file."
   (:require [clojure.test :refer [deftest is testing]]
