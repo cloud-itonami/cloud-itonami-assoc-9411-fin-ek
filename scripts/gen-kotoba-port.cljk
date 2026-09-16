@@ -34,7 +34,7 @@
             [clojure.string :as str]
             ["fs" :as fs]))
 
-(def argv (vec (remove #(str/ends-with? % "gen-kotoba-port.cljs")
+(def argv (vec (remove #(str/ends-with? % "gen-kotoba-port.cljk")
                        (drop 2 (js->clj (.-argv js/process))))))
 (def check? (some #{"--check"} argv))
 

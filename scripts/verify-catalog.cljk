@@ -58,7 +58,7 @@
 ;; wrong the moment the launcher changes, and the symptom is that the script
 ;; path becomes the catalog path -- which this script then reports as
 ;; unreadable, i.e. a refusal that looks like a broken catalog.
-(def argv (vec (remove #(str/ends-with? % "verify-catalog.cljs")
+(def argv (vec (remove #(str/ends-with? % "verify-catalog.cljk")
                        (drop 2 (js->clj (.-argv js/process))))))
 (def live? (some #{"--live"} argv))
 (def data-path
