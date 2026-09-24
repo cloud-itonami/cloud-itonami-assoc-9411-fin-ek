@@ -30,7 +30,7 @@
 ;; are authored once, in data/datascript-tx.edn, and nowhere else.
 
 (ns gen-kotoba-port
-  (:require [clojure.edn :as edn]
+  (:require [kotoba.lang.edn :as edn]
             [clojure.string :as str]
             ["fs" :as fs]))
 
